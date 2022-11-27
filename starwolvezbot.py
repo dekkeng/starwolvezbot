@@ -7,8 +7,7 @@ print("Start Starwolvez Bot!")
 player = Player()
 
 try:
-    while True:
-        player.start()
+    player.start()
 except Exception as e:
     player.log(None, e)
     pass

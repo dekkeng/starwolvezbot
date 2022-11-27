@@ -18,7 +18,7 @@ class Player:
         self.restore1 = self.getPos("restore1", self.CONFIDENCE)
 
     def updatePlayPos(self):
-        self.ap = self.getPos("ap5", 0.9)
+        self.ap = self.getPos("ap5", 0.95)
         self.cont = self.getPos("continue", self.CONFIDENCE)
         self.heal1 = self.getPos("heal1", self.CONFIDENCE)
         self.heavy1 = self.getPos("heavy1", self.CONFIDENCE)
@@ -50,8 +50,6 @@ class Player:
                 elif self.heal1 != None:
                     self.heal()
                     is_heal = True
-            
-            self.wait(0.1)
 
     def restore(self):
         if self.restore1 != None:
@@ -62,7 +60,7 @@ class Player:
 
     def start(self):
         self.log("Start")
-        for _ in range(0,1000):
+        for _ in range(1000):
             self.updatePos()
             if self.pve != None:
                 self.click(self.pve)
@@ -72,7 +70,6 @@ class Player:
                 self.click(self.launch)
             elif self.restore1 != None:
                 self.play()
-            self.wait(0.1)
 
     def getPos(self, file, conf = 0.6):
         return pyautogui.locateCenterOnScreen('./sample/'+file+'.png', confidence = conf)
