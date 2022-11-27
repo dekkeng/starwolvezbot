@@ -13,20 +13,23 @@ class Player:
         self.updatePos()
 
     def updatePos(self):
+        self.launch = self.getPos("launch", self.CONFIDENCE)
+        self.pve = self.getPos("pve", self.CONFIDENCE)
+        self.restore1 = self.getPos("restore1", self.CONFIDENCE)
+
+    def updatePlayPos(self):
         self.ap = self.getPos("ap5", 0.9)
         self.cont = self.getPos("continue", self.CONFIDENCE)
         self.heal1 = self.getPos("heal1", self.CONFIDENCE)
         self.heavy1 = self.getPos("heavy1", self.CONFIDENCE)
-        self.launch = self.getPos("launch", self.CONFIDENCE)
-        self.pve = self.getPos("pve", self.CONFIDENCE)
-        self.restore1 = self.getPos("restore1", self.CONFIDENCE)
         self.gohome = self.getPos("return", self.CONFIDENCE)
-    
+
     def play(self):
         self.log("Play")
+        self.updatePos()
         is_heal = True
-        while True:
-            self.updatePos()
+        for _ in range(0,100):
+            self.updatePlayPos()
             if self.gohome != None:
                 self.click(self.gohome)
                 self.wait(3)
@@ -59,7 +62,7 @@ class Player:
 
     def start(self):
         self.log("Start")
-        while True:
+        for _ in range(0,1000):
             self.updatePos()
             if self.pve != None:
                 self.click(self.pve)
@@ -69,7 +72,7 @@ class Player:
                 self.click(self.launch)
             elif self.restore1 != None:
                 self.play()
-            self.wait(0.3)
+            self.wait(0.1)
 
     def getPos(self, file, conf = 0.6):
         return pyautogui.locateCenterOnScreen('./sample/'+file+'.png', confidence = conf)
